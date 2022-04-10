@@ -7,5 +7,6 @@ const db = {}
 db.mongoose = mongoose
 db.url = MONGO_URL
 db.user = require('./user.model')(mongoose)
+db.board = require('./board.model')(mongoose)
 
 module.exports= db

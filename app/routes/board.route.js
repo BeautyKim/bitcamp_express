@@ -1,12 +1,3 @@
-const express = require('express');
-const { write } = require('../controllers/board.controller');
-const boardRouter = express.Router()
-
-boardRouter.use((req, res, next) => {
-    console.log('### 게시판 서버 ###');
-    next();
-})
-
-boardRouter.post("/write", write)
-
-module.exports = boardRouter;
+const {boardForm, boardList} = require('../controllers/board.controller');
+module.exports = x => {x.app.post(`${x.url}/form`, boardForm)
+                       x.app.get(`${x.url}/list`, boardList)}
