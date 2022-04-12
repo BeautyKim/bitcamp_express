@@ -15,7 +15,7 @@ for(const leaf of nodes){
 }
 
 // require(`${APP}/admin.route`)({url:'/api/admin',app})
-// require(`${APP}/basic.route`)({url:'/api/basic',app})
+
 
 
 const corsOptions = {
