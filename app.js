@@ -13,10 +13,7 @@ const nodes = ['basic','board','user']
 for(const leaf of nodes){
   require(`${APP}/${leaf}.route`)({url:`/api/${leaf}`,app})
 }
-// require(`${APP}/board.route`)({url:'/api/board',app})
-// require(`${APP}/todo.route`)({url:'/api/todo',app})
-// require(`${APP}/user.route`)({url:'/api/user',app})
-// require(`${APP}/game.route`)({url:'/api/game',app})
+
 // require(`${APP}/admin.route`)({url:'/api/admin',app})
 // require(`${APP}/basic.route`)({url:'/api/basic',app})
 
