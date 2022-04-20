@@ -1,4 +1,4 @@
-const { bmi } = require('../services/basic.service');
+const { bmi } = require('../services/basicService');
 
 exports.getBmi = (req, res) =>{
     const {name, height, weight} = req.body

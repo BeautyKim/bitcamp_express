@@ -2,9 +2,16 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import db from './app/models/index.js'
-// import tokenRouter from './app/routes/token'
-// import todoController from './app/controllers/todoController.js'
-// import userController from './app/controllers/userController.js'
+import apiRouter from './app/routes/api.js'
+import basicRouter from "./app/routes/basic.js"
+import boardRouter from "./app/routes/board.js"
+import userRouter from "./app/routes/user.js"
+import indexRouter from "./app/routes/index.js"
+import todoRouter from "./app/routes/todo.js"
+
+// import tokenRouter from './app/routes/token' import todoController from
+// './app/controllers/todoController.js' import userController from
+// './app/controllers/userController.js'
 
 async function startServer() {
     dotenv.config()
@@ -16,13 +23,16 @@ async function startServer() {
     app.use(express.urlencoded({extended: true}));
     app.use(express.json());
     app.use(cors());
-    // app.use('/todo', todoController)
-    // app.use('/user', userController)
-    const corsOptions = {
-        origin: 'http://localhost:3000',
-        optionsSuccessStatus: 200
-    }
-    db.mongoose
+    app.use("/", indexRouter);
+    app.use("/api", apiRouter);
+    app.use("/basic", basicRouter);
+    app.use("/board", boardRouter);
+    app.use("/todo", todoRouter);
+    app.use("/user", userRouter);
+    // app.use('/todo', todoController) app.use('/user', userController)
+
+    db
+        .mongoose
         .connect(mongoUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -34,16 +44,20 @@ async function startServer() {
             console.log(' 몽고DB와 연결 실패', err)
             process.exit();
         });
+    app.all("*", function (_req, res) {
+        return responseService.notFoundResponse(res, "페이지를 찾을 수 없습니다");
+    });
+
+    app.use((err, _req, res) => {
+        if (err.name == "UnauthorizedError") {
+            return responseService.unauthorizedResponse(res, err.message);
+        }
+    });
+
     app.listen(port, () => {
         console.log('***************** ***************** *****************')
         console.log('********** 서버가 정상적으로 실행되고 있습니다 *********')
         console.log('***************** ***************** *****************')
-    })
-    app.get('/', (req, res) => {
-        res.json({"현재 시간 : ": new Date().toLocaleString()})
-    })
-    app.get('/api/now', cors(corsOptions), (req, res) => {
-        res.json({"now": new Date().toLocaleString()})
     })
 
 }

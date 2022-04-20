@@ -3,7 +3,7 @@ const express = require('express');
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { verifyToken } = require('./middlewares');
+const { verifyToken } = require('./verifyToken');
 
 // JWT 보안 
 
