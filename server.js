@@ -8,6 +8,7 @@ import boardRouter from "./app/routes/board.js"
 import userRouter from "./app/routes/user.js"
 import indexRouter from "./app/routes/index.js"
 import todoRouter from "./app/routes/todo.js"
+import ResponseService from "./app/services/responseService.js"
 
 // import tokenRouter from './app/routes/token' import todoController from
 // './app/controllers/todoController.js' import userController from
@@ -15,7 +16,7 @@ import todoRouter from "./app/routes/todo.js"
 
 async function startServer() {
     dotenv.config()
-    const app = express();
+    const app = express(); 
     const mongoUri = process.env.MONGO_URI
     const port = process.env.PORT
     // app.use('/token', tokenRouter);
@@ -29,7 +30,7 @@ async function startServer() {
     app.use("/board", boardRouter);
     app.use("/todo", todoRouter);
     app.use("/user", userRouter);
-    // app.use('/todo', todoController) app.use('/user', userController)
+    const responseService = new ResponseService()
 
     db
         .mongoose
